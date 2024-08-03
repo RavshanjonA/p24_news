@@ -1,0 +1,1 @@
+## advertise uchun manger yozish active=ActiveAdvertiseManager yozish advertise ni expire va is_active uchun filterlab bersin.
