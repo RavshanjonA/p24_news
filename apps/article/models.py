@@ -1,12 +1,13 @@
 from datetime import timedelta
 
 from django.db.models import CharField, SlugField, TextField, DateTimeField, TextChoices, Manager, ForeignKey, CASCADE, \
-    IntegerField, ImageField, SET_NULL, URLField, BooleanField
+    IntegerField, ImageField, SET_NULL, URLField, BooleanField, ManyToManyField
 from django.utils import timezone
+from django.utils.text import slugify
 from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.article.choices import Status
-from apps.article.managers import PublishManager
+from apps.article.managers import PublishManager, ActiveAdvertiseManager
 from apps.shared.models import BaseModel
 
 
@@ -17,7 +18,7 @@ class Article(BaseModel):
 
     # fields
     title = CharField(max_length=256)
-    slug = SlugField(unique=True)
+    slug = SlugField(unique=True, blank=True)
     body = TextField()
     published_at = DateTimeField(default=timezone.now)
     status = CharField(max_length=15, choices=Status.choices, default=Status.DRAFT)
@@ -25,10 +26,22 @@ class Article(BaseModel):
     likes = IntegerField(default=0)
     image = ImageField(upload_to="article/images/")
     owner = ForeignKey("account.Account", SET_NULL, 'article', null=True)
+    is_active = BooleanField(default=False)
+    tags = ManyToManyField("article.Tag", "articles")
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.slug = slugify(" ".join([self.published_at.strftime('%Y-%m-%d'), self.title]))
+        super().save(force_insert, force_update, using, update_fields)
 
 
 class Category(BaseModel):
     name = CharField(max_length=64)
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+    def __str__(self):
+        return self.name
 
 
 class Comment(BaseModel):
@@ -36,11 +49,13 @@ class Comment(BaseModel):
     owner = ForeignKey("account.Account", CASCADE, "comments")
     article = ForeignKey("article.Article", CASCADE, "comments")
 
+
 def advertise_expire(*args, **kwargs):
-    return timezone.now()+timedelta(days=3)
+    return timezone.now() + timedelta(days=3)
 
 
 class Advertise(BaseModel):
+    active = ActiveAdvertiseManager()
     image = ImageField(upload_to="advertise/images/")
     url = URLField()
     expire_date = DateTimeField(default=advertise_expire)
@@ -48,4 +63,5 @@ class Advertise(BaseModel):
     is_active = BooleanField()
 
 
-
+class Tag(BaseModel):
+    name = CharField(max_length=56)

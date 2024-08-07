@@ -42,6 +42,9 @@ DJANGO_APPS = [
 ]
 THIRDY_PARTY_APPS = [
     "phonenumber_field",
+    "crispy_forms",
+    "crispy_bootstrap5",
+
 ]
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRDY_PARTY_APPS
 
@@ -69,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.article.context_processors.category_list'
             ],
         },
     },
@@ -121,13 +125,18 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static/'
+
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
-STATICFILES_DIRS= [
+
+STATICFILES_DIRS = [
     BASE_DIR / 'staticfiles'
 ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
