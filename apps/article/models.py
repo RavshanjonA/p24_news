@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db.models import CharField, SlugField, TextField, DateTimeField, TextChoices, Manager, ForeignKey, CASCADE, \
     IntegerField, ImageField, SET_NULL, URLField, BooleanField, ManyToManyField
 from django.utils import timezone
@@ -18,13 +19,12 @@ class Article(BaseModel):
 
     # fields
     title = CharField(max_length=256)
-    slug = SlugField(unique=True, blank=True)
-    body = TextField()
+    slug = SlugField(unique=True, blank=True, max_length=256)
+    body = RichTextUploadingField()
     published_at = DateTimeField(default=timezone.now)
     status = CharField(max_length=15, choices=Status.choices, default=Status.DRAFT)
     category = ForeignKey("article.Category", CASCADE, 'artcicles')
     likes = IntegerField(default=0)
-    image = ImageField(upload_to="article/images/")
     owner = ForeignKey("account.Account", SET_NULL, 'article', null=True)
     is_active = BooleanField(default=False)
     tags = ManyToManyField("article.Tag", "articles")
@@ -65,3 +65,6 @@ class Advertise(BaseModel):
 
 class Tag(BaseModel):
     name = CharField(max_length=56)
+
+    def __str__(self):
+        return self.name

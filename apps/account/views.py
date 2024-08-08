@@ -6,7 +6,7 @@ from apps.account.forms import SubscribeForm
 
 class SubscribeView(View):
     def get(self, request):
-        form = SubscribeForm(email=request.GET.get('email'))
+        form = SubscribeForm()
         context = {
             "form": form
         }

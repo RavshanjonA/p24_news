@@ -2,16 +2,18 @@
 <div id="sidebar">
     <!-- begin Advertisement -->
     <div class="ads"><a href="#"><img src="{% static 'images/ad125x125.jpg' %}" alt=""/></a> <a href="#"><img
-            src="{% static 'images/ad125x125.jpg' %}" alt=""/></a> <a href="#"><img src="images/ad125x125.jpg"
-                                                                                    alt=""/></a> <a
-            href="#"><img src="images/ad125x125.jpg" alt=""/></a></div>
+            src="{% static 'images/ad125x125.jpg' %}" alt=""/></a> <a href="#"><img
+            src="{% static 'images/ad125x125.jpg' %}"
+            alt=""/></a> <a
+            href="#"><img src="{% static 'images/ad125x125.jpg' %}" alt=""/></a></div>
     <!-- end Advertisement -->
     <!-- begin subscribe -->
     <h2>Subscribe Here</h2>
-    <form class="subscribe" action="account:subscribe">
+    <form class="subscribe" method="post" action="{% url 'account:subscribe' %}">
+        {% csrf_token %}
         <a href="{% url 'account:subscribe' %}">Subscribe via RSS Feed or</a>
         <input type="text" name="email" value="Enter E-mail Here.."/>
-        <button type="submit">Submit</button>
+        <button type="submit">subcribe</button>
     </form>
     <!-- end subscribe -->
     <!-- begin popular posts -->

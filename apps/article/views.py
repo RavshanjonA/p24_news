@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 
 from apps.article.models import Article, Category, Tag
@@ -28,3 +28,9 @@ class CategoryView(View):
             # "tags": tags
         }
         return render(request, "article/page.html", context=context)
+
+
+class ArticleDetialView(View):
+    def get(self, request, slug):
+        article = get_object_or_404(Article, slug=slug)
+        return render(request, "article/article.html", {"article": article})

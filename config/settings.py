@@ -44,6 +44,8 @@ THIRDY_PARTY_APPS = [
     "phonenumber_field",
     "crispy_forms",
     "crispy_bootstrap5",
+    'ckeditor',
+    'ckeditor_uploader',
 
 ]
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRDY_PARTY_APPS
@@ -138,5 +140,18 @@ STATICFILES_DIRS = [
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+CKEDITOR_CONFIGS = {
+    'default':
+        {
+            'toolbar': 'full',
+            'width': 'auto',
+            'extraPlugins': ','.join([
+                'codesnippet',
+            ]),
+        },
+}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

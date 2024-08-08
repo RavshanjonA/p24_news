@@ -1,4 +1,5 @@
-## base.html yaratish va pagelarga ulash bootstrap bn
+## blog model uchun ckeditor qollash
+## feed page ulash
 ## query.txt yozish 6ta m2m, m20, o2m
-## sidebar uchun blog larni context processorga qo'shish
-## page.html ni  ulash 
+## comment larni article detail da chiqarish.
+## inlinelarni qollash, autocomplete qollash

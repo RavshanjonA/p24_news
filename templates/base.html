@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>NewsTheme</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+    <!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="{% static 'ie.css' %}" /><![endif]-->
+</head>
+<body>
+<!-- BEGIN navigation -->
+<div id="navigation">
+    <div class="wrapper">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="article/about.html">About Us</a></li>
+            <li><a href="article/page.html">Demo Page</a></li>
+            <li><a href="article/contact.html">Contact Page</a></li>
+        </ul>
+        <form action="#">
+            <button type="submit">Search</button>
+            <input type="text" name="s" id="s"/>
+        </form>
+    </div>
+</div>
+{% block content %}
+
+
+{% endblock %}
+<!-- BEGIN footer -->
+<div id="footer">
+    <div class="wrapper">
+        <p class="l">Copyright &copy; 2009 - <a href="#">Website Name</a> &middot; All Rights Reserved</p>
+        <p class="r">Template by: <a href="http://www.wpthemedesigner.com/">WordPress Designer</a> | Get More <a
+                href="#">Free CSS Templates</a></p>
+    </div>
+</div>
+<!-- END footer -->
+</body>
+</html>
+
+

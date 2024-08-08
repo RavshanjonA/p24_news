@@ -8,10 +8,9 @@ class SubscribeForm(ModelForm):
     password = CharField(widget=PasswordInput)
     confirm_password = CharField(widget=PasswordInput)
 
-    def clean(self):
-        if self.cleaned_data["password"] != self.cleaned_data["confirm_password"]:
+    def clean_confirm_password(self):
+        if self.cleaned_data.get("password") != self.cleaned_data.get("confirm_password"):
             raise ValidationError("Passwords must be match")
-        return super().clean()
 
     def save(self, commit=True):
         user: Account = super().save(commit=False)

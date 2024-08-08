@@ -46,7 +46,6 @@
                     <div class="post">
                         <p class="date">{{ arct.published_at }}</p>
                         <h2><a href="#">{{ arct.title|truncatewords:6 }}</a></h2>
-                        <a href="#"><img src="{{ arct.image.url }}" alt="" class="thumbnail"/></a>
                         <p>{{ arct.body|truncatewords:40 }}</p>
                         <div class="details"><a href="#">READ MORE</a> <a href="#">{{ arct.comments.count }}
                             Comments</a></div>
