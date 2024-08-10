@@ -18,6 +18,8 @@ class HomeView(View):
         return render(request, "article/index.html", context=context)
 
 
+
+
 class CategoryView(View):
     def get(self, request, pk):
         # category =Category.objects.get(id=pk)

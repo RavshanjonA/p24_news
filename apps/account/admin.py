@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from apps.account.models import Account, Feed, Blog
+
+admin.site.register([Account, Feed, Blog])

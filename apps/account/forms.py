@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.forms import Form, ModelForm, CharField, PasswordInput
 
-from apps.account.models import Account
+from apps.account.models import Account, Feed
 
 
 class SubscribeForm(ModelForm):
@@ -22,3 +22,21 @@ class SubscribeForm(ModelForm):
     class Meta:
         model = Account
         fields = ("first_name", "last_name", "username", "email", "password", "confirm_password",)
+
+
+class FeedForm(ModelForm):
+
+    def save(self, user, commit=True):
+        feed = super().save(commit=False)
+        feed.account = user
+        feed.save()
+        return feed
+
+    class Meta:
+        model = Feed
+        exclude = ('account',)
+
+
+class LoginForm(Form):
+    username = CharField()
+    password = CharField(widget=PasswordInput())
