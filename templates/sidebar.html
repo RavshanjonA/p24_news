@@ -1,5 +1,22 @@
 {% load static %}
+{% load i18n %}
+{% load l10n %}
 <div id="sidebar">
+    <div class="row">
+        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+            <select class="form-control form-control-sm" id="exampleFormControlSelect1" name="language"
+                    onchange="this.form.submit();">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                        {{ language.name_local }} ({{ language.code }})
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
     <div class="row">
         <h5>Meta</h5>
         <ul>
@@ -25,7 +42,10 @@
     <!-- end Advertisement -->
     <!-- begin subscribe -->
     <div class="row">
-        <h5>Subscribe Here</h5>
+        <h5>
+
+            {% trans 'Subscribe Here' %}
+        </h5>
         <form class="subscribe" method="post" action="{% url 'account:subscribe' %}">
             {% csrf_token %}
             <a href="{% url 'account:subscribe' %}">Subscribe via RSS Feed or</a>

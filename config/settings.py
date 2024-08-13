@@ -35,7 +35,7 @@ CUSTOM_APPS = [
     "apps.article",
 ]
 DJANGO_APPS = [
-    'jazzmin',
+    # 'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,17 +44,20 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 THIRDY_PARTY_APPS = [
+    'modeltranslation',
     "phonenumber_field",
     "crispy_forms",
     "crispy_bootstrap5",
     'ckeditor',
     'ckeditor_uploader',
+    'rosetta',
 
 ]
-INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRDY_PARTY_APPS
+INSTALLED_APPS = CUSTOM_APPS + THIRDY_PARTY_APPS + DJANGO_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -123,6 +126,8 @@ TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -158,5 +163,22 @@ CKEDITOR_CONFIGS = {
             ]),
         },
 }
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
+MODELTRANSLATION_LANGUAGES = ("en", "uz", "ru")
+MODELTRANSLATION_FALLBACK_LANGUAGES = ("en", "uz", "ru")
+
+
+def gettext(s):
+    return s
+
+
+LANGUAGES = (
+    ("en", gettext("English")),
+    ("ru", gettext("Русский")),
+    ("uz", gettext("O'zbekcha")),
+)
+
+LOCALE_PATHS = (BASE_DIR / "locale",)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

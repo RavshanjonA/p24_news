@@ -1,5 +1,6 @@
 from django.contrib import admin
-from django.contrib.admin import StackedInline, TabularInline
+from django.contrib.admin import StackedInline, TabularInline, ModelAdmin
+from modeltranslation.admin import TranslationAdmin
 
 from apps.article.models import Article, Category, Comment, Advertise, Tag
 
@@ -15,14 +16,24 @@ class CommentInline(TabularInline):
 
 
 @admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'body', 'slug', 'is_active', 'owner', 'likes')
-    list_filter = ('category', 'is_active', 'owner')
-    date_hierarchy = 'published_at'
-    prepopulated_fields = {'slug': ('title', 'published_at')}
-    search_fields = ('title', 'body')
-    inlines = (CommentInline,)
-    autocomplete_fields = ('category', 'tags')
+class ArticleAdmin(TranslationAdmin):
+
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
+    # list_display = ('title', 'body', 'slug', 'is_active', 'owner', 'likes')
+    # list_filter = ('category', 'is_active', 'owner')
+    # date_hierarchy = 'published_at'
+    # prepopulated_fields = {'slug': ('title', 'published_at')}
+    # search_fields = ('title', 'body')
+    # inlines = (CommentInline,)
+    # autocomplete_fields = ('category', 'tags')
 
 
 @admin.register(Category)

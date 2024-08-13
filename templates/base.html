@@ -20,9 +20,9 @@
             <li><a href="article/page.html">Demo Page</a></li>
             <li><a href="{% url 'account:feed' %}">Contact Page</a></li>
         </ul>
-        <form>
-            {#            <button type="submit">Search</button>#}
-            <input type="text"/>
+        <form method="post">
+            {% csrf_token %}
+            <input name="search" type="text" {% if search %} value="{{ search }}" {% endif %}/>
             <button type="submit">Search</button>
         </form>
     </div>

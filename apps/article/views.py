@@ -1,6 +1,9 @@
+from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
+from apps.article.forms import SearchForm
 from apps.article.models import Article, Category, Tag
 
 
@@ -17,7 +20,23 @@ class HomeView(View):
         }
         return render(request, "article/index.html", context=context)
 
+    def post(self, request):
+        search = request.POST.get('search')
+        articles = Article.objects.filter(Q(title__icontains=search) | Q(category__name=search))
+        if articles:
+            first = articles[0]
+            articles = articles[1:]
+            tags = Tag.objects.all()
+            context = {
+                "article": first,
+                "articles": articles,
+                "tags": tags,
+                "search": search
+            }
+            return render(request, "article/index.html", context=context)
 
+        else:
+            return HttpResponse(f"with {search} articles not found ")
 
 
 class CategoryView(View):
