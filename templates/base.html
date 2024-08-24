@@ -27,6 +27,19 @@
         </form>
     </div>
 </div>
+
+{% if messages %}
+    <ul type="none" class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">
+                <p class="alert-success text-center" style="padding-top: 5px; padding-bottom: 5px;">
+                    {{ message }}
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
 {% block content %}
 
 

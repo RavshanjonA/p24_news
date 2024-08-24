@@ -1,11 +1,14 @@
+from threading import activeCount
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 
 from apps.account.forms import SubscribeForm, FeedForm, LoginForm
+from apps.account.models import Account
 from apps.article.models import Article
 
 
@@ -68,4 +71,13 @@ class LoginView(View):
 class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
+        return redirect("article:home")
+
+
+class ActivateView(View):
+    def get(self, request, token):
+        account = get_object_or_404(Account, password=token)
+        account.is_active=True
+        account.save()
+        messages.success(request, f"Your account successfully activated {account.username}")
         return redirect("article:home")

@@ -14,12 +14,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
@@ -31,6 +31,8 @@ urlpatterns += i18n_patterns(
     path('account/', include('apps.account.urls', 'account')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 )
+
+urlpatterns += debug_toolbar_urls()
 if 'rosetta' in settings.INSTALLED_APPS:
     urlpatterns += [
         path('rosetta/', include('rosetta.urls'))

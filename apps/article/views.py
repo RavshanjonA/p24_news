@@ -2,12 +2,14 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
+from django.views.decorators.cache import cache_page
 
 from apps.article.forms import SearchForm
 from apps.article.models import Article, Category, Tag
 
 
 class HomeView(View):
+
     def get(self, request):
         articles = Article.published.order_by('-published_at')
         first = articles[0]
